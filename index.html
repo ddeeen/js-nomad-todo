@@ -8,31 +8,39 @@
   </head>
 
   <body>
-    <form class="input-name">
-      <label for="name">What is your name?</label>
-      <input id="name" type="text" required />
-      <input class="input-name__button" type="submit" />
+    <form id="nameForm" class="input-name">
+      <label for="name">What's your name?</label>
+      <div class="input">
+        <input id="name" type="text" required />
+        <input class="input-name__button" value="Log-in" type="submit" />
+      </div>
     </form>
-    <!-- <div class="background-cover"></div> -->
     <div class="content hide">
-      <h1 class="welcome"></h1>
-      <h2 class="clock"></h2>
+      <header class="header">
+        <span class="welcome"></span>
+        <section class="weather-box">
+          <span class="weather-box__location"></span>
+          <span class="weather-box__weather"></span>
+          <span class="weather-box__temperature"></span>
+        </section>
+      </header>
+      <span class="clock"></span>
+      <section class="todo">
+        <form id="todo" class="todo-list__form">
+          <input type="text" placeholder="Write a to do" />
+        </form>
+        <ul class="todo-list"></ul>
+      </section>
       <section class="quote-box">
         <span class="quote-box__quote"></span>
         <span class="quote-box__writer"></span>
       </section>
-      <section class="todo">
-        <ul class="todo-list"></ul>
-        <form class="todo-list__form">
-          <input type="text" />
-        </form>
-      </section>
-      <section class="weather-box">
-        <span class="location"></span>
-        <span class="weather"></span>
-        <span class="temperature"></span>
-      </section>
     </div>
-    <script src="app.js"></script>
+    <script src="./scripts/app.js"></script>
+    <script src="./scripts/background.js"></script>
+    <script src="./scripts/quotes.js"></script>
+    <script src="./scripts/time.js"></script>
+    <script src="./scripts/weather.js"></script>
+    <script src="./scripts/todo.js"></script>
   </body>
 </html>
