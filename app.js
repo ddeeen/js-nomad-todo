@@ -72,9 +72,49 @@ const contentSection = document.querySelector(".content");
 const USER_NAME = "Username";
 const HIDE_CLASS = "hide";
 
+let todoArray = [];
+
+function paintTodo(newTodo) {
+  const todoList = document.querySelector(".todo-list");
+  const listTag = document.createElement("li");
+  const spanTag = document.createElement("span");
+  const btnTag = document.createElement("button");
+
+  listTag.id = newTodo["id"];
+  spanTag.innerText = newTodo["todo"];
+  listTag.appendChild(spanTag);
+  btnTag.innerText = "❌";
+  btnTag.classList.add("todoBtn");
+  btnTag.addEventListener("click", onClickDeleteTodo);
+  listTag.appendChild(btnTag);
+  todoList.appendChild(listTag);
+
+  todoArray.push({ id: newTodo["id"], todo: newTodo["todo"] });
+  return JSON.stringify(todoArray);
+}
+
+function paintTodoHistory() {
+  //   const todoList = document.querySelector(".todo-list");
+  const history = JSON.parse(localStorage.getItem("todos"));
+
+  if (history) {
+    history.forEach((element) => {
+      todo = paintTodo(element);
+      localStorage.setItem("todos", todo);
+      //   const listTag = document.createElement("li");
+      //   listTag.innerHTML = `<span>${element}<span>`;
+      //   todoList.appendChild(listTag);
+      //   todoArray.push(element);
+    });
+  }
+}
+
+paintTodoHistory();
+
 document.body.style.backgroundImage = `url(images/${
   images[Math.floor(Math.random() * images.length)]
 })`;
+
 console.log(`images/${images[Math.floor(Math.random() * images.length)]}`);
 
 if (localStorage.getItem(USER_NAME) != null) {
@@ -92,12 +132,12 @@ function onClickBtn(event) {
   event.preventDefault();
   localStorage.setItem(USER_NAME, name.value);
 
+  //   imgTag = document.createElement("img");
+  //   imgTag.src = `images/${images[Math.floor(Math.random() * images.length)]}`;
+  //   document.body.appendChild(imgTag);
   welcome.innerText = `Welcome! ${localStorage.getItem(USER_NAME)}`;
   input_name.classList.add(HIDE_CLASS);
   contentSection.classList.remove(HIDE_CLASS);
-  imgTag = document.createElement("img");
-  imgTag.src = `images/${images[Math.floor(Math.random() * images.length)]}`;
-  document.body.appendChild(imgTag);
 }
 
 nameButton.addEventListener("click", onClickBtn);
@@ -122,3 +162,38 @@ writer.innerText = choice_quote[WRITER];
 
 printTime();
 setInterval(printTime, 1000);
+
+const formTodo = document.querySelector(".todo-list__form");
+
+function onSubmitAddList(event) {
+  const inputTodo = formTodo.querySelector("input");
+  const inputValue = inputTodo.value;
+
+  event.preventDefault();
+  inputTodo.value = "";
+  todo = paintTodo({ id: Date.now(), todo: inputValue });
+  localStorage.setItem("todos", todo);
+}
+
+formTodo.addEventListener("submit", onSubmitAddList);
+
+function onClickDeleteTodo(event) {
+  //   console.dir(event);
+  const todoList = document.querySelector(".todo-list");
+  const deleteTag = event.target.parentNode;
+  console.log(deleteTag);
+
+  todoList.removeChild(deleteTag);
+  todoArray = todoArray.filter(
+    (element) => element["id"] !== parseInt(event.target.parentNode.id)
+  );
+  localStorage.setItem("todos", JSON.stringify(todoArray));
+  //   localStorage.setItem("todos");
+  //   todoList.querySelector(`#${event.target.parentNode.id}`);
+  //   const deleteTag = document.querySelector("ul");
+}
+
+navigator.geolocation.getCurrentPosition((position) => {
+  console.log(position);
+  console.log(position.coords.latitude, position.coords.longitude);
+});

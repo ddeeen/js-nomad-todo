@@ -8,7 +8,7 @@
   </head>
 
   <body>
-    <form class="input-name" action="" method="get">
+    <form class="input-name">
       <label for="name">What is your name?</label>
       <input id="name" type="text" required />
       <input class="input-name__button" type="submit" />
@@ -21,7 +21,17 @@
         <span class="quote-box__quote"></span>
         <span class="quote-box__writer"></span>
       </section>
-      <ul class="todo"></ul>
+      <section class="todo">
+        <ul class="todo-list"></ul>
+        <form class="todo-list__form">
+          <input type="text" />
+        </form>
+      </section>
+      <section class="weather-box">
+        <span class="location"></span>
+        <span class="weather"></span>
+        <span class="temperature"></span>
+      </section>
     </div>
     <script src="app.js"></script>
   </body>
